@@ -8,16 +8,24 @@ import android.view.View;
 import android.widget.Button;
 
 public class backend extends AppCompatActivity {
-Button storefrontbutton;
+Button storefrontbutton,add;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_backend);
         storefrontbutton=(Button)findViewById(R.id.store_front);
+        add=(Button)findViewById(R.id.add);
         storefrontbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(backend.this,MainActivity.class);
+                startActivity(intent);
+            }
+        });
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(backend.this,Add_item.class);
                 startActivity(intent);
             }
         });
