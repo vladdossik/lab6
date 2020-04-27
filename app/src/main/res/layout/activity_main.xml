@@ -14,17 +14,9 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/store-front"
-            android:background="@null"
-            android:text="store-front" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:text="back-end"
             android:background="@null"
-            android:id="@+id/back-end"
+            android:id="@+id/back_end"
             android:layout_weight="1" />
     </LinearLayout>
 </RelativeLayout>
