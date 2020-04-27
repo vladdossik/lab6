@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".backend">
+    android:layout_height="match_parent">
+    <Button
+        android:id="@+id/add"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/edittextstyle"
+        android:layout_width="match_parent"
+        android:hint="ADD"
+        android:ellipsize="start"
+        android:padding="7dp"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+    </Button>
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerHeight="0.5dp">
+    </ListView>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
-
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -18,7 +34,5 @@
             android:id="@+id/store-front"
             android:background="@null"
             android:text="store_front" />
-
-
     </LinearLayout>
 </RelativeLayout>
