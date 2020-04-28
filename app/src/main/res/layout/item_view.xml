@@ -8,7 +8,7 @@
 <TextView
     android:layout_marginTop="30dp"
     android:id="@+id/name"
-    android:textSize="15dp"
+    android:textSize="15sp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 </TextView>
@@ -35,7 +35,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/store-front"
+            android:id="@+id/buy"
             android:background="@null"
             android:text="Buy" />
     </LinearLayout>

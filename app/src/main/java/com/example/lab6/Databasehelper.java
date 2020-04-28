@@ -56,7 +56,7 @@ public class Databasehelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         value--;
-        contentValues.put(COL3, value);
+        contentValues.put(COL4, value);
         db.update(DB_name, contentValues, "name = " + name, null);
 
     }
