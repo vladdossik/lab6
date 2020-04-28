@@ -17,14 +17,14 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 Button backend_button;
 ListView listView;
-Databasehelper databasehelper;
+static Databasehelper databasehelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         backend_button = (Button) findViewById(R.id.back_end);
-listView=(ListView)findViewById(R.id.list_view);
-databasehelper=new Databasehelper(this);
+        databasehelper=new Databasehelper(this);
+        listView=(ListView)findViewById(R.id.list_view);
 populateListView();
         backend_button.setOnClickListener(new View.OnClickListener() {
             @Override
