@@ -7,6 +7,7 @@
     <EditText
         android:layout_marginTop="40dp"
         android:hint="Название"
+        android:id="@+id/add_name"
         android:inputType="textPersonName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -15,6 +16,7 @@
     <EditText
         android:layout_marginTop="80dp"
         android:hint="Количество"
+        android:id="@+id/add_amount"
         android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -23,6 +25,7 @@
         android:layout_marginTop="120dp"
         android:hint="Цена"
         android:inputType="number"
+        android:id="@+id/add_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </EditText>
@@ -43,7 +46,7 @@
             android:layout_height="wrap_content"
             android:text="add"
             android:background="@null"
-            android:id="@+id/add"
+            android:id="@+id/add_button"
             android:layout_weight="1" />
     </LinearLayout>
 </RelativeLayout>

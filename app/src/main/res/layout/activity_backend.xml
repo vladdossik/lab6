@@ -16,7 +16,7 @@
         android:layout_height="wrap_content">
     </Button>
     <ListView
-        android:id="@+id/list_view"
+        android:id="@+id/list_add"
         android:layout_marginTop="12dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -10,12 +10,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Databasehelper extends SQLiteOpenHelper {
     private static final String COL2 = "name";
-    private static String COL3="price";
-     private static String COL4="amount";
+    private static final String COL3="price";
+     private static final String COL4="amount";
     public static String DB_name = "range";
     public Databasehelper(Context context) {
 
-        super(context, DB_name, null, 1);
+        super(context, DB_name, null, 3);
     }
 
     @Override
@@ -39,11 +39,12 @@ public class Databasehelper extends SQLiteOpenHelper {
         Cursor data = db.rawQuery(query, null);
         return data;
     }
-    public void Add(String name) {
+    public void Add(String name, String price, String amount) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL2, name);
-        contentValues.put(COL3,0);
+        contentValues.put(COL3,price);
+        contentValues.put(COL4,amount);
         db.insert(DB_name, null, contentValues);
     }
 
@@ -51,9 +52,10 @@ public class Databasehelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(DB_name, COL2 +" = " +name, null);
     }
-    public void replace(String name, String value) {
+    public void replace(String name, int value) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        value--;
         contentValues.put(COL3, value);
         db.update(DB_name, contentValues, "name = " + name, null);
 
