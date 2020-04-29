@@ -1,24 +1,22 @@
 package com.example.lab6;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-
 import java.util.ArrayList;
 import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 Button backend_button;
-RecyclerView listView;
+ListView listView;
 static Databasehelper databasehelper;
     ArrayList<String> range = new ArrayList<>();
     final Context context = this;
@@ -28,7 +26,7 @@ static Databasehelper databasehelper;
         setContentView(R.layout.activity_main);
         backend_button = (Button) findViewById(R.id.back_end);
         databasehelper=new Databasehelper(this);
-        listView=(RecyclerView) findViewById(R.id.list_view);
+        listView=(ListView)findViewById(R.id.list_view);
 populateListView();
         backend_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,7 +35,14 @@ populateListView();
                 startActivity(intent);
             }
         });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
     }
+
     public void populateListView() {
         //get the data and append to a list
         Cursor data = databasehelper.getData();
@@ -47,8 +52,7 @@ populateListView();
             //then add it to the ArrayList
             range.add(data.getPosition() + 1 + " | name: "+data.getString(1) +" | price: "+data.getString(2));
         }
-        //adapterRecyclerView = new AdapterRecyclerView(StoreFrontActivity.this, list, this);
-        //todo add normal adapter
-       // listView.setAdapter(adapter);
+        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, range);
+        listView.setAdapter(adapter);
     }
 }
