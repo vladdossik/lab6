@@ -30,12 +30,12 @@ Databasehelper databasehelper;
                     toastMessage("Поля не должны быть пустыми");
                 }
                 else {
-                    String name=add_name.toString();
-                    String amount=add_amount.toString();
-                    String price=add_price.toString();
+                    String name=add_name.getText().toString();
+                    int amount=Integer.parseInt(add_amount.getText().toString());
+                    int price=Integer.parseInt(add_price.getText().toString());
                     databasehelper.Add(name,price,amount);
                    toastMessage("Товар добавлен");
-                   add_name.setText("");
+                     add_name.setText("");
                     add_amount.setText("");
                     add_price.setText("");
                 }

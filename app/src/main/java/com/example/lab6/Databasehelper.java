@@ -15,15 +15,14 @@ public class Databasehelper extends SQLiteOpenHelper {
     public static String DB_name = "range";
     public Databasehelper(Context context) {
 
-        super(context, DB_name, null, 3);
+        super(context, DB_name, null, 7);
     }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + DB_name + " (ID INTEGER PRIMARY KEY , " +
                 COL2 + " TEXT," +
-                COL3 + " TEXT," +
-                COL4 + " TEXT)";
+                COL3 + " INTEGER," +
+                COL4 + " INTEGER)";
         db.execSQL(createTable);
     }
 
@@ -39,7 +38,7 @@ public class Databasehelper extends SQLiteOpenHelper {
         Cursor data = db.rawQuery(query, null);
         return data;
     }
-    public void Add(String name, String price, String amount) {
+    public void Add(String name, int price, int amount) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL2, name);

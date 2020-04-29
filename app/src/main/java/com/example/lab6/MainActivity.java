@@ -2,6 +2,7 @@ package com.example.lab6;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
 Button backend_button;
 ListView listView;
 static Databasehelper databasehelper;
+    ArrayList<String> range = new ArrayList<>();
+    final Context context = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,14 +41,14 @@ populateListView();
     public void populateListView() {
         //get the data and append to a list
         Cursor data = databasehelper.getData();
-        ArrayList<String> listData = new ArrayList<>();
+        range.clear();
         while(data.moveToNext()) {
             //get the value from the database in column 1
             //then add it to the ArrayList
-            listData.add(data.getPosition() + 1 + " | "+data.getString(1)+"|"+data.getString(2)+""+data.getString(3) );
+            range.add(data.getPosition() + 1 + " | "+data.getString(1) );
         }
 
-        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
+        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, range);
         listView.setAdapter(adapter);
     }
 }
