@@ -45,7 +45,7 @@ populateListView();
         while(data.moveToNext()) {
             //get the value from the database in column 1
             //then add it to the ArrayList
-            range.add(data.getPosition() + 1 + " | "+data.getString(1) );
+            range.add(data.getPosition() + 1 + " | name: "+data.getString(1) +" | price: "+data.getString(2));
         }
 
         ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, range);

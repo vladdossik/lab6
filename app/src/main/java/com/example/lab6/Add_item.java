@@ -39,7 +39,6 @@ Databasehelper databasehelper;
                     add_amount.setText("");
                     add_price.setText("");
                 }
-                toastMessage("Кнопка add нажата");
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
