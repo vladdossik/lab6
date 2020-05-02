@@ -66,8 +66,8 @@ public class BackendActivity extends AppCompatActivity {
                             .apply();
 
                     Intent intent = new Intent(getApplicationContext(), UserActivity.class);
-                    intent.putExtra(MyConstants.ID_KEY, id);
-                    intent.putExtra(MyConstants.POSITION_KEY, position);
+                    intent.putExtra("ID", id);
+                    intent.putExtra("POSITION", position);
                     startActivityForResult(intent, 1);
                 }
             }
