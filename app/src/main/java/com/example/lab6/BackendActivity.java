@@ -51,8 +51,8 @@ public class BackendActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(ProgressBar.INVISIBLE);
 
-        settings = getSharedPreferences(MyConstants.NAME_SETTINGS, Context.MODE_PRIVATE);
-        setPos = (HashSet<String>) settings.getStringSet(MyConstants.SET_KEY, new HashSet<String>());
+        settings = getSharedPreferences("APP", Context.MODE_PRIVATE);
+        setPos = (HashSet<String>) settings.getStringSet("SET", new HashSet<String>());
 
         ListView listView = findViewById(R.id.list);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -62,13 +62,13 @@ public class BackendActivity extends AppCompatActivity {
                 if (!setPos.contains(String.valueOf(position))) {
                     prefEditor = settings.edit();
                     setPos.add(String.valueOf(position));
-                    prefEditor.putStringSet(MyConstants.SET_KEY, setPos)
+                    prefEditor.putStringSet("SET", setPos)
                             .apply();
 
                     Intent intent = new Intent(getApplicationContext(), UserActivity.class);
                     intent.putExtra(MyConstants.ID_KEY, id);
                     intent.putExtra(MyConstants.POSITION_KEY, position);
-                    startActivityForResult(intent, MyConstants.REQUEST_ACCESS_TYPE);
+                    startActivityForResult(intent, 1);
                 }
             }
         });
@@ -83,7 +83,7 @@ public class BackendActivity extends AppCompatActivity {
 
     public void onAddItemClick(View view) {
         Intent intent = new Intent(this, UserActivity.class);
-        startActivityForResult(intent, MyConstants.REQUEST_ACCESS_TYPE);
+        startActivityForResult(intent, 1);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class BackendActivity extends AppCompatActivity {
             pos = data.getIntExtra("POSITION", -1);
 
             if (resultCode == RESULT_OK) {
-                boolean isDelete = data.getBooleanExtra(MyConstants.DELETE, false);
+                boolean isDelete = data.getBooleanExtra("TRUE", false);
 
                 if (pos != -1 && !isDelete) {
                     new ProgressTask(data).execute();
