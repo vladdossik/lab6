@@ -19,21 +19,18 @@ public class UserActivity extends AppCompatActivity {
     private EditText nameBox;
     private EditText priceBox;
     private EditText countBox;
-
     private long id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-
         nameBox = findViewById(R.id.name);
         priceBox = findViewById(R.id.price);
         countBox = findViewById(R.id.count);
 
         databaseHelper = new DatabaseHelper(this);
         db = databaseHelper.getReadableDatabase();
-
         setDataItem();
     }
 
@@ -65,15 +62,11 @@ public class UserActivity extends AppCompatActivity {
         String count = countBox.getText().toString();
 
         if (name.length() != 0 && price.length() != 0 && count.length() != 0) {
-            if (CheckData.checkPrice(price) && CheckData.checkCount(count)) {
                 databaseHelper.update(id, name, price, count);
                 goBack();
-            } else {
-                Toast.makeText(getApplicationContext(), "Цена содержит только целые и дробные числа, кол-во - только целые.",
-                        Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            Toast.makeText(getApplicationContext(), "Заполните все поля.", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(getApplicationContext(), "Проверьте введенные данные", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -1,66 +1,33 @@
 package com.example.lab6;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.view.View;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import java.util.ArrayList;
+import android.os.Bundle;
 
-public class StorefrontActivity extends AppCompatActivity {
+import com.example.lab6.DatabaseHelper;
+import com.example.lab6.PageFragment;
+import com.example.lab6.R;
+import com.example.lab6.ViewPagerAdapter;
 
-    private ViewPager viewPager;
-    private ArrayList<Product> productList = new ArrayList<>();
-    private DatabaseHelper databaseHelper;
-    private ViewPagerAdapter adapter;
+public class StorefrontActivity extends AppCompatActivity implements PageFragment.OnFragmentDataListener {
+
+    public static ViewPagerAdapter adapter;
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_storefront);
 
-        databaseHelper = new DatabaseHelper(getApplicationContext());
-        fillList();
-
         viewPager = findViewById(R.id.pager);
-        adapter = new ViewPagerAdapter(getSupportFragmentManager(), productList);
+
+        adapter = new ViewPagerAdapter(getSupportFragmentManager(), new DatabaseHelper(getApplicationContext()).getArrayList());
         viewPager.setAdapter(adapter);
     }
 
-    public void onBuyClick(View view) {
-        int pos = viewPager.getCurrentItem();
-
-        String name = productList.get(pos).getName();
-        String price = productList.get(pos).getPrice();
-        int count = productList.get(pos).getCount();
-
-        int newCount = databaseHelper.decrementCount(name, price, count);
-        productList.get(pos).setCount(newCount);
-        if (newCount == 0) {
-            productList.remove(pos);
-        }
+    @Override
+    public void onFragmentDataListener() {
         adapter.notifyDataSetChanged();
-    }
-
-    private void fillList() {
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from " + DatabaseHelper.TABLE_NAME,null);
-
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast()) {
-                String name = cursor.getString(1);
-                String price = cursor.getString(2);
-                int count = cursor.getInt(3);
-
-                if (count > 0) {
-                    productList.add(new Product(name, price, count));
-                }
-                cursor.moveToNext();
-            }
-        }
-        cursor.close();
     }
 }

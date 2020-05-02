@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "my_store.db";
     private static final int SCHEMA = 1;
@@ -33,7 +35,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(TABLE_NAME, "_id = ?", new String[]{ String.valueOf(id) });
     }
+    public Cursor getAllLines() {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery("select * from " + TABLE_NAME,null);
+    }
+    public ArrayList<Product> getArrayList() {
+        ArrayList<Product> list = new ArrayList<>();
 
+        Cursor cursor = getAllLines();
+
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                String name = cursor.getString(1);
+                String price = cursor.getString(2);
+                int count = cursor.getInt(3);
+
+                if (count > 0) {
+                    list.add(new Product(name, price, count));
+                }
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+
+        return list;
+    }
     public void update(long id, String name, String price, String count) {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_NAME, name);

@@ -1,6 +1,6 @@
 package com.example.lab6;
 
-public class Product {
+public class    Product {
     private String name;
     private String price;
     private int count;
@@ -9,6 +9,14 @@ public class Product {
         this.name = name;
         this.price = price;
         this.count = count;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public void setCount(int count) {
