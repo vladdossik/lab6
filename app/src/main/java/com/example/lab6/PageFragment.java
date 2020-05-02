@@ -1,6 +1,7 @@
 package com.example.lab6;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -17,26 +18,32 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.lab6.BackendActivity;
+import com.example.lab6.DatabaseHelper;
+import com.example.lab6.Product;
+import com.example.lab6.R;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
 public class PageFragment extends Fragment {
 
-    private static final String name1 = "NAME";
-    private static final String price1 = "PRICE";
-    private static final String amount1 = "COUNT";
+    private String name;
+    private String price;
+    private int count;
+    private int pos;
+
     public static ArrayList<Product> products;
     private HashSet<String> setPos;
 
     private Button button;
     private ProgressBar progressBar;
-    private String name;
-    private String price;
-    private int count;
-    private int pos;
-    public PageFragment() { }
 
+    private SharedPreferences settings;
+    private SharedPreferences.Editor prefEditor;
+
+    public PageFragment() { }
 
     public interface OnFragmentDataListener {
         void onFragmentDataListener();
@@ -53,13 +60,16 @@ public class PageFragment extends Fragment {
             throw new RuntimeException(context.toString());
         }
     }
+
     public static PageFragment newInstance(int i, ArrayList<Product> productList) {
         PageFragment fragment = new PageFragment();
-products=productList;
+        products = productList;
+
         Bundle args = new Bundle();
-        args.putString(name1, productList.get(i).getName());
-        args.putString(price1, productList.get(i).getPrice());
-        args.putInt(amount1, productList.get(i).getCount());
+        args.putString("NAME", productList.get(i).getName());
+        args.putString("PRICE", productList.get(i).getPrice());
+        args.putInt("COUNT", productList.get(i).getCount());
+        args.putInt("POSITION", i);
 
         fragment.setArguments(args);
         return fragment;
@@ -69,16 +79,18 @@ products=productList;
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        name = getArguments().getString(name1);
-        price = getArguments().getString(price1);
-        count = getArguments().getInt(amount1);
+        name = getArguments().getString("NAME");
+        price = getArguments().getString("PRICE");
+        count = getArguments().getInt("COUNT");
+        pos = getArguments().getInt("POSITION");
+        settings = getActivity().getSharedPreferences("APP", Context.MODE_PRIVATE);
+        setPos = (HashSet<String>) settings.getStringSet("SET", new HashSet<String>());
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_page, container, false);
-
         TextView nameTextView = view.findViewById(R.id.nameText);
         nameTextView.setText(name);
 
@@ -87,9 +99,10 @@ products=productList;
 
         TextView countTextView = view.findViewById(R.id.countText);
         countTextView.setText(String.format("Количество: %s", count));
+
         progressBar = view.findViewById(R.id.progressBar);
         progressBar.setVisibility(ProgressBar.INVISIBLE);
-        button = view.findViewById(R.id.buyButton);
+
         button = view.findViewById(R.id.buyButton);
 
         if (setPos.contains(String.valueOf(pos))) {
@@ -97,15 +110,25 @@ products=productList;
         } else {
             button.setClickable(true);
         }
+
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                prefEditor = settings.edit();
                 setPos.add(String.valueOf(pos));
+                prefEditor.putStringSet("SET", setPos)
+                        .apply();
+
                 new ProgressTask(getContext()).execute();
             }
         });
+
+
         return view;
     }
+
     private class ProgressTask extends AsyncTask<Void, Integer, Void> {
         private Context context;
         private int seconds = new Random().nextInt(2) + 3;
@@ -146,6 +169,9 @@ products=productList;
 
             if (setPos.contains(String.valueOf(pos))) {
                 setPos.remove(String.valueOf(pos));
+                prefEditor.remove("SET")
+                        .putStringSet("SET", setPos)
+                        .commit();
             }
 
             if (newCount == 0) {
