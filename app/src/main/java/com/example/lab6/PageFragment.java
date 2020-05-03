@@ -95,10 +95,10 @@ public class PageFragment extends Fragment {
         nameTextView.setText(name);
 
         TextView priceTextView = view.findViewById(R.id.priceText);
-        priceTextView.setText(String.format("Цена: %s", price));
+        priceTextView.setText(String.format("Цена: "+ price));
 
         TextView countTextView = view.findViewById(R.id.countText);
-        countTextView.setText(String.format("Количество: %s", count));
+        countTextView.setText(String.format("Количество: "+ count));
 
         progressBar = view.findViewById(R.id.progressBar);
         progressBar.setVisibility(ProgressBar.INVISIBLE);
@@ -179,10 +179,7 @@ public class PageFragment extends Fragment {
             }
 
             mListener.onFragmentDataListener();
-
-            Toast toast = Toast.makeText(context, "Покупка " + name + " завершена", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER, 0, 580);
-            toast.show();
+      Toast.makeText(context, "Вы купили  " + name , Toast.LENGTH_SHORT).show();
 
             if (BackendActivity.adapter != null) {
                 BackendActivity.adapter.changeCursor(new DatabaseHelper(context).getAllLines());

@@ -19,9 +19,7 @@ public class StorefrontActivity extends AppCompatActivity implements PageFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_storefront);
-
         viewPager = findViewById(R.id.pager);
-
         adapter = new ViewPagerAdapter(getSupportFragmentManager(), new DatabaseHelper(getApplicationContext()).getArrayList());
         viewPager.setAdapter(adapter);
     }

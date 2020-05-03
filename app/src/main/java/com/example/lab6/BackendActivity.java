@@ -149,7 +149,7 @@ public class BackendActivity extends AppCompatActivity {
             return null;
         }
 
-        @Override
+                @Override
         protected void onProgressUpdate(Integer... values) {
             progressBar.setProgress(values[0] + 1);
         }
